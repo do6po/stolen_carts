@@ -22,4 +22,17 @@ class MakeTest extends TestCase
 
         $this->seeInDatabase(Make::TABLE_NAME, $attributes);
     }
+
+    public function test_create_new_make_from_factory()
+    {
+        $attributes = [
+            'name' => $this->faker()->name
+        ];
+
+        $this->notSeeInDatabase(Make::TABLE_NAME, $attributes);
+
+        factory(Make::class)->create($attributes);
+
+        $this->seeInDatabase(Make::TABLE_NAME, $attributes);
+    }
 }

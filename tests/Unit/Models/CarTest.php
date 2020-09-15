@@ -3,6 +3,7 @@
 namespace Unit\Models;
 
 use App\Models\Car;
+use App\Models\Make;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use TestCase;
 
@@ -12,18 +13,22 @@ class CarTest extends TestCase
 
     public function test_it_create_car()
     {
+        /** @var Make $make */
+        $make = factory(Make::class)->create();
+
         $attributes = [
             'name' => $this->faker()->name,
             'registration_plate' => $this->faker()->randomElement($this->carNumber()),
             'color' => $this->faker()->colorName,
-            'make' => $this->faker()->randomElement($this->carMakes()),
             'model' => $this->faker()->randomElement($this->carModels()),
             'year' => $this->faker()->year,
         ];
 
         $this->notSeeInDatabase(Car::TABLE_NAME, $attributes);
 
-        Car::query()->create($attributes);
+        $car = Car::query()->make($attributes);
+        $car->make_id = $make->id;
+        $car->save();
 
         $this->seeInDatabase(Car::TABLE_NAME, $attributes);
     }
@@ -35,16 +40,6 @@ class CarTest extends TestCase
             'ВТ3003АМ',
             'ВТ0399АМ',
             'ВТ1234АМ',
-        ];
-    }
-
-    private function carMakes()
-    {
-        return [
-            'toyota',
-            'audi',
-            'bmw',
-            'vaz',
         ];
     }
 
