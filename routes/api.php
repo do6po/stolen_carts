@@ -23,7 +23,21 @@ $router->group(
                 'as' => 'api.cars'
             ],
             function () use ($router) {
-                $router->post('', ['as' => 'create', 'uses' => 'CarController@create']);
+                $router->get(
+                    'models/search',
+                    [
+                        'as' => 'models.search',
+                        'uses' => 'ModelController@search'
+                    ]
+                );
+
+                $router->get(
+                    'makes/search',
+                    [
+                        'as' => 'makes.search',
+                        'uses' => 'MakeController@search'
+                    ]
+                );
             }
         );
     }

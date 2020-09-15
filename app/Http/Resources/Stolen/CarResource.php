@@ -19,7 +19,7 @@ class CarResource extends JsonResource
             'registration_plate' => $car->registration_plate,
             'color' => $car->color,
             'year' => $car->year,
-            'make' => $car->make,
+            'model_id' => $car->model,
         ];
     }
 }
