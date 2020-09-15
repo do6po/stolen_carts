@@ -17,11 +17,11 @@ class CarTest extends TestCase
         $make = factory(Make::class)->create();
 
         $attributes = [
-            'name' => $this->faker()->name,
-            'registration_plate' => $this->faker()->randomElement($this->carNumber()),
-            'color' => $this->faker()->colorName,
-            'model' => $this->faker()->randomElement($this->carModels()),
-            'year' => $this->faker()->year,
+            'name' => 'Машина Влада',
+            'registration_plate' => 'ВТ0931АМ',
+            'color' => 'blue',
+            'model' => 'Tarantaika',
+            'year' => 1901,
         ];
 
         $this->notSeeInDatabase(Car::TABLE_NAME, $attributes);
@@ -33,23 +33,4 @@ class CarTest extends TestCase
         $this->seeInDatabase(Car::TABLE_NAME, $attributes);
     }
 
-    private function carNumber()
-    {
-        return [
-            'ВТ0931АМ',
-            'ВТ3003АМ',
-            'ВТ0399АМ',
-            'ВТ1234АМ',
-        ];
-    }
-
-    private function carModels()
-    {
-        return [
-            'T25',
-            '9',
-            '6',
-            'x5'
-        ];
-    }
 }

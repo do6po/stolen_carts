@@ -26,4 +26,12 @@ class Make extends BaseModel
     {
         return $this->hasMany(Car::class);
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
 }

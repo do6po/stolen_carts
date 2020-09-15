@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string year
  * @property null|Carbon created_at
  * @property null|Carbon updated_at
+ * @property Make make
  */
 class Car extends BaseModel
 {
@@ -35,4 +36,5 @@ class Car extends BaseModel
     {
         return $this->belongsTo(Make::class);
     }
+
 }

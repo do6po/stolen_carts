@@ -15,5 +15,16 @@ $router->group(
                 }
             ]
         );
+
+        $router->group(
+            [
+                'namespace' => 'Cars',
+                'prefix' => 'cars',
+                'as' => 'api.cars'
+            ],
+            function () use ($router) {
+                $router->post('', ['as' => 'create', 'uses' => 'CarController@create']);
+            }
+        );
     }
 );

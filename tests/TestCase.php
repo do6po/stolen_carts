@@ -27,4 +27,24 @@ abstract class TestCase extends BaseTestCase
     {
         return Faker\Factory::create();
     }
+
+    protected function jsonPost($uri, array $data = [], array $headers = [])
+    {
+        return $this->json('post', $uri, $data, $headers);
+    }
+
+    protected function jsonGet($uri, array $data = [], array $headers = [])
+    {
+        return $this->json('get', $uri, $data, $headers);
+    }
+
+    protected function jsonDelete($uri, array $data = [], array $headers = [])
+    {
+        return $this->json('delete', $uri, $data, $headers);
+    }
+
+    protected function jsonPut($uri, array $data = [], array $headers = [])
+    {
+        return $this->json('delete', $uri, $data, $headers);
+    }
 }
