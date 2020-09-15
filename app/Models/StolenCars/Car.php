@@ -21,6 +21,7 @@ use Illuminate\Database\Query\Builder;
  * @property CarModel model
  *
  * @method static Builder|self query()
+ * @method static Builder|self findOrFail(int $id)
  * @method static self make(array $attributes = [])
  * @method static self create(array $attributes = [])
  */

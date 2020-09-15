@@ -55,6 +55,22 @@ $router->group(
                         'uses' => 'StolenCarController@store'
                     ]
                 );
+
+                $router->put(
+                    '{id}',
+                    [
+                        'as' => 'update',
+                        'uses' => 'StolenCarController@update'
+                    ]
+                );
+
+                $router->delete(
+                    '{id}',
+                    [
+                        'as' => 'delete',
+                        'uses' => 'StolenCarController@delete'
+                    ]
+                );
             }
         );
     }

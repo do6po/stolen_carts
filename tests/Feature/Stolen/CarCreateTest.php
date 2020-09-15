@@ -33,6 +33,55 @@ class CarCreateTest extends TestCase
         $result->assertResponseStatus(Response::HTTP_CREATED);
 
         $this->seeInDatabase(Car::TABLE_NAME, $attributes);
+    }
 
+    public function test_it_update_car()
+    {
+        /** @var Car $car */
+        $car = factory(Car::class)->create();
+
+        $oldAttributes = [
+            'id' => $car->id,
+            'name' => $car->name,
+        ];
+        $this->seeInDatabase(
+            Car::TABLE_NAME,
+            $oldAttributes
+        );
+
+        $newAttributes = $oldAttributes;
+
+        $newAttributes['name'] = 'new name';
+
+        $result = $this->jsonPut(
+            route('api.stolen.update', ['id' => $car->id]),
+            array_merge($car->toArray(), $newAttributes)
+        );
+
+        $result->assertResponseOk();
+
+        $this->notSeeInDatabase(
+            Car::TABLE_NAME,
+            $oldAttributes
+        );
+
+        $this->seeInDatabase(
+            Car::TABLE_NAME,
+            $newAttributes
+        );
+    }
+
+    public function test_it_delete_car()
+    {
+        /** @var Car $car */
+        $car = factory(Car::class)->create();
+
+        $this->seeInDatabase(Car::TABLE_NAME, ['id' => $car->id]);
+
+        $result = $this->jsonDelete(route('api.stolen.delete', ['id' => $car->id]));
+
+        $result->assertResponseStatus(Response::HTTP_NO_CONTENT);
+
+        $this->notSeeInDatabase(Car::TABLE_NAME, ['id' => $car->id]);
     }
 }
