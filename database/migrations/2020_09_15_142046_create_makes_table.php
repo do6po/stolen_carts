@@ -10,11 +10,10 @@ class CreateMakesTable extends Migration
     public function up()
     {
         Schema::create(
-            'makes',
+            'car_makes',
             function (Blueprint $table) {
                 $table->id();
                 $table->string('name')->unique();
-                $table->timestamps();
             }
         );
     }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Car;
+use App\Models\Make;
 
 class CarService
 {
@@ -15,5 +16,13 @@ class CarService
         $car->save();
 
         return $car;
+    }
+
+    public function createMake(array $attributes): Make
+    {
+        /** @var Make $make */
+        $make = Make::query()->create($attributes);
+
+        return $make;
     }
 }

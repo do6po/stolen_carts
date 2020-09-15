@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Cars;
 
 use App\Core\Models\BaseModel;
 use Carbon\Carbon;
@@ -12,9 +12,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property null|Carbon created_at
  * @property null|Carbon updated_at
  */
-class Make extends BaseModel
+class CarMake extends BaseModel
 {
-    const TABLE_NAME = 'makes';
+    const TABLE_NAME = 'car_makes';
+
+    public $timestamps = null;
 
     protected $table = self::TABLE_NAME;
 
@@ -22,16 +24,9 @@ class Make extends BaseModel
         'name'
     ];
 
-    public function cars(): HasMany
+    public function models(): HasMany
     {
-        return $this->hasMany(Car::class);
+        return $this->hasMany(CarModel::class);
     }
 
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-        ];
-    }
 }
