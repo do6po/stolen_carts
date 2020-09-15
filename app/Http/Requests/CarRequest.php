@@ -15,9 +15,9 @@ class CarRequest extends RequestAbstract
     {
         return [
             'name' => ['required', 'string', 'min:2', 'max:64'],
+            'vin' => ['required', 'string', 'unique:cars'],
             'registration_plate' => ['required', 'string', 'unique:cars'],
-            'make_id' => ['required', 'integer', 'exists:makes,id'],
-            'model' => ['required', 'string'],
+            'model_id' => ['required', 'integer', 'exists:car_models,id'],
             'color' => ['required', 'string'],
             'year' => ['required', 'integer', 'digits:4'],
         ];

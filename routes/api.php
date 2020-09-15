@@ -40,5 +40,22 @@ $router->group(
                 );
             }
         );
+
+        $router->group(
+            [
+                'namespace' => 'Stolen',
+                'prefix' => 'stolen',
+                'as' => 'api.stolen'
+            ],
+            function () use ($router) {
+                $router->post(
+                    '',
+                    [
+                        'as' => 'create',
+                        'uses' => 'StolenCarController@store'
+                    ]
+                );
+            }
+        );
     }
 );
