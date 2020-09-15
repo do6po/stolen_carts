@@ -1,0 +1,91 @@
+version: '3'
+
+services:
+  web:
+    image: webdevops/nginx:alpine
+    container_name: ${APP_NAME}_web
+    hostname: ${APP_NAME}_web
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+      WEB_PHP_SOCKET: ${APP_NAME}_php:9000
+      LOG_STDOUT: /app/storage/logs/web.access.log
+      LOG_STDERR: /app/storage/logs/web.errors.log
+    volumes:
+      - ./:/app:rw
+    working_dir: /app
+    ports:
+      - ${DOCKER_BRIDGE}:80:80
+      - ${DOCKER_BRIDGE}:443:443
+    depends_on:
+      - php
+    restart: always
+
+  php:
+    build:
+      context: ./
+      dockerfile: docker/dev/php/Dockerfile
+    container_name: ${APP_NAME}_php
+    hostname: ${APP_NAME}_php
+    volumes:
+      - ./:/app:rw
+      - ./docker/dev/php/.bashrc:/root/.bashrc
+      - ./docker/dev/php/.bash_aliases:/root/.bash_aliases
+    working_dir: /app
+    environment:
+      TERM: xterm-256color
+      COMPOSER_ALLOW_SUPERUSER: 1
+      XDEBUG_CONFIG: "remote_host=${DOCKER_BRIDGE} remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=carpro_images"
+    restart: always
+    depends_on:
+      - db
+      - db_testing
+      - cache
+    entrypoint: ["/bin/bash", "/app/docker/bin/php_start.sh"]
+
+  db:
+    image: mysql:5.7.31
+    container_name: ${APP_NAME}_db
+    hostname: ${APP_NAME}_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - ${DOCKER_BRIDGE}:${DB_PORT}:${DB_PORT}
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+
+  db_testing:
+    image: mysql:5.7.31
+    container_name: ${APP_NAME}_db_testing
+    hostname: ${APP_NAME}_db_testing
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - ${DOCKER_BRIDGE}:3307:${DB_PORT}
+    tmpfs:
+      - /var/lib/mysql
+
+  cache:
+    image: nbtri/alpine-redis
+    restart: always
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    container_name: ${APP_NAME}_cache
+    hostname: ${APP_NAME}_cache
+    ports:
+      - ${DOCKER_BRIDGE}:6379:6379
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${DOCKER_NETWORK}
