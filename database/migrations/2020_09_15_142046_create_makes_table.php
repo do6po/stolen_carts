@@ -20,6 +20,6 @@ class CreateMakesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('makes');
+        Schema::dropIfExists('car_makes');
     }
 }
