@@ -10,19 +10,23 @@ class CreateCarsTable extends Migration
     public function up()
     {
         Schema::create(
-            'car_models',
+            'cars',
             function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
+                $table->string('vin')->unique();
+                $table->string('registration_plate')->unique();
+                $table->string('color');
+                $table->year('year');
 
-                $table->unsignedBigInteger('make_id');
-                $table->foreign('make_id')
+                $table->unsignedBigInteger('model_id');
+                $table->foreign('model_id')
+                    ->on('car_models')
                     ->references('id')
-                    ->on('car_makes')
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
 
-                $table->unique(['name', 'make_id']);
+                $table->timestamps();
             }
         );
     }

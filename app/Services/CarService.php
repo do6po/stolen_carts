@@ -2,27 +2,34 @@
 
 namespace App\Services;
 
-use App\Models\Car;
-use App\Models\Make;
+use App\Models\StolenCars\Car;
 
 class CarService
 {
+
+    public function findOrFail(int $id): Car
+    {
+        return Car::query()->findOrFail($id);
+    }
+
     public function create(array $validated): Car
     {
-        /** @var Car $car */
         $car = Car::query()->make($validated);
-        $car->make_id = $validated['make_id'];
+        $car->model_id = $validated['model_id'];
 
         $car->save();
 
         return $car;
     }
 
-    public function createMake(array $attributes): Make
+    public function update(Car $car, array $validated): Car
     {
-        /** @var Make $make */
-        $make = Make::query()->create($attributes);
+        $car->fill($validated);
+        $car->model_id = $validated['model_id'];
 
-        return $make;
+        $car->save();
+
+        return $car;
     }
+
 }

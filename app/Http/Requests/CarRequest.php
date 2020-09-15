@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Pearl\RequestValidate\RequestAbstract;
 
 class CarRequest extends RequestAbstract
@@ -13,11 +14,17 @@ class CarRequest extends RequestAbstract
 
     public function rules(): array
     {
+        $id = $this->route('id');
+
         return [
             'name' => ['required', 'string', 'min:2', 'max:64'],
-            'registration_plate' => ['required', 'string', 'unique:cars'],
-            'make_id' => ['required', 'integer', 'exists:makes,id'],
-            'model' => ['required', 'string'],
+            'vin' => ['required', 'string', Rule::unique('cars', 'vin')->ignore($id)],
+            'registration_plate' => [
+                'required',
+                'string',
+                Rule::unique('cars', 'registration_plate')->ignore($id)
+            ],
+            'model_id' => ['required', 'integer', 'exists:car_models,id'],
             'color' => ['required', 'string'],
             'year' => ['required', 'integer', 'digits:4'],
         ];

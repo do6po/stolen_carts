@@ -15,7 +15,7 @@ class ModelResource extends JsonResource
         return [
             'id' => $model->id,
             'name' => $model->name,
-            'make' => MakeResource::make($model->make),
+            'make' => MakeResource::make($model->manufacturer),
         ];
     }
 }

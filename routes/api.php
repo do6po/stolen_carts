@@ -40,5 +40,38 @@ $router->group(
                 );
             }
         );
+
+        $router->group(
+            [
+                'namespace' => 'Stolen',
+                'prefix' => 'stolen',
+                'as' => 'api.stolen'
+            ],
+            function () use ($router) {
+                $router->post(
+                    '',
+                    [
+                        'as' => 'create',
+                        'uses' => 'StolenCarController@store'
+                    ]
+                );
+
+                $router->put(
+                    '{id}',
+                    [
+                        'as' => 'update',
+                        'uses' => 'StolenCarController@update'
+                    ]
+                );
+
+                $router->delete(
+                    '{id}',
+                    [
+                        'as' => 'delete',
+                        'uses' => 'StolenCarController@delete'
+                    ]
+                );
+            }
+        );
     }
 );

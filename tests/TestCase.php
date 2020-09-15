@@ -45,6 +45,6 @@ abstract class TestCase extends BaseTestCase
 
     protected function jsonPut($uri, array $data = [], array $headers = [])
     {
-        return $this->json('delete', $uri, $data, $headers);
+        return $this->json('put', $uri, $data, $headers);
     }
 }

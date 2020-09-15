@@ -6,6 +6,7 @@ use App\Core\Models\BaseModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @property int id
@@ -13,6 +14,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property null|Carbon created_at
  * @property null|Carbon updated_at
  * @property Collection|CarModel[] models
+ *
+ * @method static Builder|self query()
+ * @method static self make(array $attributes = [])
+ * @method static self create(array $attributes = [])
  */
 class CarMake extends BaseModel
 {
