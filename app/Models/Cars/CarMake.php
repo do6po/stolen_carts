@@ -4,6 +4,7 @@ namespace App\Models\Cars;
 
 use App\Core\Models\BaseModel;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string name
  * @property null|Carbon created_at
  * @property null|Carbon updated_at
+ * @property Collection|CarModel[] models
  */
 class CarMake extends BaseModel
 {
@@ -26,7 +28,7 @@ class CarMake extends BaseModel
 
     public function models(): HasMany
     {
-        return $this->hasMany(CarModel::class);
+        return $this->hasMany(CarModel::class, 'make_id', 'id');
     }
 
 }

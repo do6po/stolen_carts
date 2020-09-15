@@ -3,11 +3,12 @@
 namespace Feature\Cars;
 
 use App\Models\Cars\CarMake;
+use App\Models\Cars\CarModel;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use TestCase;
 
-class MakeSearchTest extends TestCase
+class CarSearchTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -60,5 +61,49 @@ class MakeSearchTest extends TestCase
         $result = $this->jsonGet(route('api.cars.makes.search', ['query' => '']));
 
         $result->assertResponseStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function test_it_search_model()
+    {
+        $this->createFakeMakes();
+        $this->createMakeModels();
+
+        $route = route('api.cars.models.search', ['id' => 1]);
+        $result = $this->jsonGet($route, ['query' => 'AVEN']);
+
+        $result->assertResponseOk();
+
+        $result->seeJsonContains(
+            [
+                'data' => [
+                    [
+                        'id' => 1,
+                        'make' => [
+                            'id' => 1,
+                            'name' => 'TOYOTA',
+                        ],
+                        'name' => 'AVENSIS',
+                    ]
+                ]
+            ]
+        );
+    }
+
+    private function createMakeModels()
+    {
+        factory(CarModel::class)->create(
+            [
+                'id' => 1,
+                'name' => 'AVENSIS',
+                'make_id' => 1
+            ]
+        );
+        factory(CarModel::class)->create(
+            [
+                'id' => 2,
+                'name' => 'YARIS',
+                'make_id' => 1
+            ]
+        );
     }
 }

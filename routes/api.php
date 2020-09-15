@@ -24,18 +24,18 @@ $router->group(
             ],
             function () use ($router) {
                 $router->get(
-                    'models/search',
-                    [
-                        'as' => 'models.search',
-                        'uses' => 'ModelController@search'
-                    ]
-                );
-
-                $router->get(
                     'makes/search',
                     [
                         'as' => 'makes.search',
                         'uses' => 'MakeController@search'
+                    ]
+                );
+
+                $router->get(
+                    'makes/{id}/models/search',
+                    [
+                        'as' => 'models.search',
+                        'uses' => 'ModelController@search'
                     ]
                 );
             }

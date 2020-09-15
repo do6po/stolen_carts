@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Pearl\RequestValidate\RequestAbstract;
 
-class MakeSearchRequest extends RequestAbstract
+class SearchRequest extends RequestAbstract
 {
     public function authorize(): bool
     {
