@@ -63,7 +63,7 @@ class RemoteCarBaseService
     protected function getOptions(): array
     {
         return [
-            'json' => $this->baseOptions,
+//            'json' => $this->baseOptions,
             'headers' => $this->headers,
         ];
     }

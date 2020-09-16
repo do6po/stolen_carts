@@ -43,6 +43,7 @@ class CarModelsSync extends Command
 
         $count = $this->import($makes);
 
+        $this->info(PHP_EOL);
         $this->info(sprintf('Было добавлено %s записей.', $count));
     }
 
@@ -82,6 +83,8 @@ class CarModelsSync extends Command
 
             $this->progressBar->advance();
         }
+
+        $this->progressBar->finish();
 
         return $imported;
     }
