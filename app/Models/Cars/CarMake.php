@@ -28,7 +28,8 @@ class CarMake extends BaseModel
     protected $table = self::TABLE_NAME;
 
     protected $fillable = [
-        'name'
+        'name',
+        'remote_id',
     ];
 
     public function models(): HasMany

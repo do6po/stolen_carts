@@ -4,35 +4,52 @@ namespace App\Http\Controllers\Api\Stolen;
 
 use App\Http\Requests\CarRequest;
 use App\Http\Resources\Stolen\CarResource;
-use App\Services\CarService;
+use App\Services\StolenCarService;
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class StolenCarController
 {
 
     /**
-     * @var CarService
+     * @var StolenCarService
      */
-    protected CarService $carService;
+    protected StolenCarService $stoleCarService;
 
-    public function __construct(CarService $carService)
+    public function __construct(StolenCarService $carService)
     {
-        $this->carService = $carService;
+        $this->stoleCarService = $carService;
     }
 
+    /**
+     * @param CarRequest $request
+     * @return CarResource
+     * @throws GuzzleException
+     * @throws Throwable
+     */
     public function store(CarRequest $request): CarResource
     {
-        $car = $this->carService->create($request->validated());
+        $car = $this->stoleCarService->create($request->validated());
 
         return CarResource::make($car);
     }
 
+    /**
+     * @param int $id
+     * @param CarRequest $request
+     * @return CarResource
+     * @throws GuzzleException
+     * @throws Throwable
+     * @throws ValidationException
+     */
     public function update(int $id, CarRequest $request): CarResource
     {
-        $car = $this->carService->update(
-            $this->carService->findOrFail($id),
+        $car = $this->stoleCarService->update(
+            $this->stoleCarService->findOrFail($id),
             $request->validated()
         );
 
@@ -46,7 +63,7 @@ class StolenCarController
      */
     public function delete(int $id): JsonResponse
     {
-        $this->carService->findOrFail($id)->delete();
+        $this->stoleCarService->findOrFail($id)->delete();
 
         return response()->json([], Response::HTTP_NO_CONTENT);
     }

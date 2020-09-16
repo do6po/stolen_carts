@@ -13,7 +13,8 @@ class CarMakeTest extends TestCase
     public function test_it_create_new_car_make()
     {
         $attributes = [
-            'name' => $this->faker()->name
+            'name' => $this->faker()->name,
+            'remote_id' => 100,
         ];
 
         $this->notSeeInDatabase(CarMake::TABLE_NAME, $attributes);
@@ -26,7 +27,8 @@ class CarMakeTest extends TestCase
     public function test_create_new_car_make_from_factory()
     {
         $attributes = [
-            'name' => $this->faker()->name
+            'name' => $this->faker()->name,
+            'remote_id' => 100,
         ];
 
         $this->notSeeInDatabase(CarMake::TABLE_NAME, $attributes);
