@@ -25,6 +25,7 @@ class VinServiceTest extends TestCase
             'make_id' => 460,
             'year' => 2017,
         ];
+
         $model = $this->service->findCarByVin($car['vin']);
 
         $this->assertEquals($car['year'], $model->getYear());

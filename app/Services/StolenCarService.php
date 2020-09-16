@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\StolenCars\Car;
 use App\Services\CarLibs\CarBaseService;
 use App\Services\CarLibs\VinService;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -41,25 +42,18 @@ class StolenCarService
     {
         try {
             $carInfo = $this->vinService->findCarByVin($validated['vin']);
-
             $model = $this->carBaseService->createModelOrGet($carInfo);
 
             $car = Car::query()->make($validated);
             $car->model_id = $model->id;
-
+            $car->color = $carInfo->getColor() ?? $validated['color'];
             $car->save();
 
             return $car;
         } catch (NotFoundHttpException $exception) {
             Log::error($exception);
 
-            throw ValidationException::withMessages(
-                [
-                    'vin' => [
-                        $exception->getMessage()
-                    ]
-                ]
-            );
+            $this->throwValidationException($exception);
         } catch (Throwable $exception) {
             Log::error($exception);
 
@@ -67,14 +61,55 @@ class StolenCarService
         }
     }
 
+    /**
+     * @param Exception $exception
+     * @throws ValidationException
+     */
+    protected function throwValidationException(Exception $exception): void
+    {
+        //TODO переделать хендлер - возвращает ошибку 500
+        throw ValidationException::withMessages(
+            [
+                'vin' => [
+                    $exception->getMessage()
+                ],
+            ]
+        );
+    }
+
+    /**
+     * @param Car $car
+     * @param array $validated
+     * @return Car
+     * @throws GuzzleException
+     * @throws Throwable
+     * @throws ValidationException
+     */
     public function update(Car $car, array $validated): Car
     {
         $car->fill($validated);
-        $car->model_id = $validated['model_id'];
 
-        $car->save();
+        if (!$car->isDirty('vin')) {
+            $car->save();
 
-        return $car;
+            return $car;
+        }
+
+        try {
+            $carInfo = $this->vinService->findCarByVin($validated['vin']);
+            $model = $this->carBaseService->createModelOrGet($carInfo);
+            $car->model_id = $model->id;
+            $car->color = $carInfo->getColor() ?? $validated['color'];
+            $car->save();
+
+            return $car;
+        } catch (NotFoundHttpException $exception) {
+            Log::error($exception);
+
+            $this->throwValidationException($exception);
+        } catch (Throwable $exception) {
+            Log::error($exception);
+            throw $exception;
+        }
     }
-
 }

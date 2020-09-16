@@ -6,8 +6,11 @@ use App\Http\Requests\CarRequest;
 use App\Http\Resources\Stolen\CarResource;
 use App\Services\StolenCarService;
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class StolenCarController
 {
@@ -22,6 +25,12 @@ class StolenCarController
         $this->stoleCarService = $carService;
     }
 
+    /**
+     * @param CarRequest $request
+     * @return CarResource
+     * @throws GuzzleException
+     * @throws Throwable
+     */
     public function store(CarRequest $request): CarResource
     {
         $car = $this->stoleCarService->create($request->validated());
@@ -29,6 +38,14 @@ class StolenCarController
         return CarResource::make($car);
     }
 
+    /**
+     * @param int $id
+     * @param CarRequest $request
+     * @return CarResource
+     * @throws GuzzleException
+     * @throws Throwable
+     * @throws ValidationException
+     */
     public function update(int $id, CarRequest $request): CarResource
     {
         $car = $this->stoleCarService->update(

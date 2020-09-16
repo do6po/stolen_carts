@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\Models\StoleCars;
+namespace Unit\Models\StolenCars;
 
 use App\Models\Cars\CarModel;
 use App\Models\StolenCars\Car;
@@ -18,9 +18,9 @@ class CarTest extends TestCase
         $attributes = [
             'name' => 'Васина тачка',
             'color' => 'red',
-            'vin' => 'ВТ3003ВЕВТ3003ВЕ',
+            'vin' => '3FA6P0VP1HR282209',
             'registration_plate' => 'ВТ3003ВЕ',
-            'year' => 2001,
+            'year' => 1917,
         ];
 
         $this->notSeeInDatabase(Car::TABLE_NAME, $attributes);

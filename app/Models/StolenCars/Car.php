@@ -44,4 +44,9 @@ class Car extends BaseModel
         return $this->belongsTo(CarModel::class, 'model_id', 'id');
     }
 
+    public function getVin(): ?string
+    {
+        return $this->vin;
+    }
+
 }

@@ -2,7 +2,6 @@
 
 namespace Feature\Stolen;
 
-use App\Models\Cars\CarModel;
 use App\Models\StolenCars\Car;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -14,16 +13,12 @@ class CarCreateTest extends TestCase
 
     public function test_it_create_new_stolen_car()
     {
-        /** @var CarModel $model */
-        $model = factory(CarModel::class)->create();
-
         $attributes = [
             'name' => 'Новая украденная машина',
             'color' => 'red',
-            'vin' => 'ВТ3003ВЕВТ3003ВЕ',
+            'vin' => '3FA6P0VP1HR282209',
             'registration_plate' => 'ВТ3003ВЕ',
-            'year' => 2001,
-            'model_id' => $model->id,
+            'year' => 1939,
         ];
 
         $this->notSeeInDatabase(Car::TABLE_NAME, $attributes);
@@ -83,5 +78,21 @@ class CarCreateTest extends TestCase
         $result->assertResponseStatus(Response::HTTP_NO_CONTENT);
 
         $this->notSeeInDatabase(Car::TABLE_NAME, ['id' => $car->id]);
+    }
+
+    public function test_it_try_to_set_not_exists_vin()
+    {
+        $attributes = [
+            'name' => 'Не существующая машина',
+            'color' => 'red',
+            'vin' => '4FA6P0VP1HR282209',
+            'registration_plate' => 'ВТ3003ВЕ',
+            'year' => 1939,
+        ];
+
+        $result = $this->jsonPost(route('api.stolen.create'), $attributes);
+
+        $result->assertResponseStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
+//        $result->assertResponseStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
