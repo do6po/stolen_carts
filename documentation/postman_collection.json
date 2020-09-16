@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "8c6cc160-efa0-4826-b6da-30c4b9e52cb2",
+		"name": "Stolen cars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cars",
+			"item": [
+				{
+					"name": "get stolen cars",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.137.1/api/stolen?name=super&vin=3f&model_name=fusion&make_name=ford&model_id=247&manufacturer_id=37890&registration_plate=03&color=red&year=2018",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"137",
+								"1"
+							],
+							"path": [
+								"api",
+								"stolen"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "super"
+								},
+								{
+									"key": "vin",
+									"value": "3f"
+								},
+								{
+									"key": "model_name",
+									"value": "fusion"
+								},
+								{
+									"key": "make_name",
+									"value": "ford"
+								},
+								{
+									"key": "model_id",
+									"value": "247"
+								},
+								{
+									"key": "manufacturer_id",
+									"value": "37890"
+								},
+								{
+									"key": "registration_plate",
+									"value": "03"
+								},
+								{
+									"key": "color",
+									"value": "red"
+								},
+								{
+									"key": "year",
+									"value": "2018"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"super name\",\n\t\"vin\": \"3FA6P0VP1HR282209\",\n\t\"color\": \"red\",\n\t\"registration_plate\": \"ВТ0399ВЕ\",\n\t\"year\": 2018\n}"
+						},
+						"url": {
+							"raw": "http://192.168.137.1/api/stolen",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"137",
+								"1"
+							],
+							"path": [
+								"api",
+								"stolen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"super name 1\",\n\t\"vin\": \"3FA6P0VP1HR282209\",\n\t\"color\": \"red\",\n\t\"registration_plate\": \"ВТ0399ВЕ\",\n\t\"year\": 2018\n}"
+						},
+						"url": {
+							"raw": "http://192.168.137.1/api/stolen/102",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"137",
+								"1"
+							],
+							"path": [
+								"api",
+								"stolen",
+								"102"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "base",
+			"item": [],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

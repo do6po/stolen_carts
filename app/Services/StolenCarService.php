@@ -53,15 +53,14 @@ class StolenCarService
         } catch (NotFoundHttpException $exception) {
             Log::error($exception);
 
-            throw $this->throwValidationException($exception);
+            throw $this->validationException($exception);
         } catch (Throwable $exception) {
             Log::error($exception);
-
             throw $exception;
         }
     }
 
-    protected function throwValidationException(Exception $exception): ValidationException
+    protected function validationException(Exception $exception): ValidationException
     {
         //TODO переделать хендлер - возвращает ошибку 500
         return ValidationException::withMessages(
@@ -101,7 +100,7 @@ class StolenCarService
         } catch (NotFoundHttpException $exception) {
             Log::error($exception);
 
-            throw $this->throwValidationException($exception);
+            throw $this->validationException($exception);
         } catch (Throwable $exception) {
             Log::error($exception);
             throw $exception;

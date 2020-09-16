@@ -48,6 +48,13 @@ $router->group(
                 'as' => 'api.stolen'
             ],
             function () use ($router) {
+                $router->get(
+                    '',
+                    [
+                        'as' => 'list',
+                        'uses' => 'StolenCarController@index',
+                    ]
+                );
                 $router->post(
                     '',
                     [
