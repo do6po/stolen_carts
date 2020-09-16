@@ -18,7 +18,7 @@ class ModelController
         $query = $make->input('query');
 
         $models = $carMake->models()
-            ->whereRaw('BINARY name LIKE ?', ["%$query%"])
+            ->whereRaw('LOWER(name) LIKE ?', ["%$query%"])
             ->with(['manufacturer'])
             ->paginate(self::PER_PAGE)
             ->appends(['query' => $query]);
