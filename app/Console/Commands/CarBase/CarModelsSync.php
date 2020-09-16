@@ -10,9 +10,9 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-class CarModelsUpdate extends Command
+class CarModelsSync extends Command
 {
-    protected $signature = 'car-base:model:update';
+    protected $signature = 'car-base:model:sync';
 
     protected $description = 'Обновление моделей';
 

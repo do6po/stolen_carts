@@ -7,9 +7,9 @@ use App\Services\CarLibs\RemoteCarBaseService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Console\Command;
 
-class CarMakesUpdate extends Command
+class CarMakesSync extends Command
 {
-    protected $signature = 'car-base:make:update';
+    protected $signature = 'car-base:make:sync';
 
     protected $description = 'Обновление производителей';
 

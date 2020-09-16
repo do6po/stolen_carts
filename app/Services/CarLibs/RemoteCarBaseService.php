@@ -10,9 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RemoteCarBaseService
 {
-    /**
-     * @var ApiService
-     */
+
     protected ApiService $api;
 
     protected string $url = 'https://vpic.nhtsa.dot.gov/api';
@@ -100,6 +98,7 @@ class RemoteCarBaseService
      * @param int $makeId
      * @return array
      * @throws GuzzleException
+     * @throws Exception
      */
     public function getModelsByMakeId(int $makeId): array
     {
@@ -109,7 +108,7 @@ class RemoteCarBaseService
             sprintf(
                 '%s/%s/%s?%s',
                 $this->url,
-                'vehicles/GetModelsForMakeId',
+                'vehicles/getmodelsformakeid',
                 $makeId,
                 http_build_query($this->baseOptions)
             ),
