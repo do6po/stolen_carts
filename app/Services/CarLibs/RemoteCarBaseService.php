@@ -75,7 +75,7 @@ class RemoteCarBaseService
      * @throws GuzzleException
      * @throws Exception
      */
-    public function makes(): array
+    public function getMakes(): array
     {
         $options = $this->getOptions();
 
@@ -84,6 +84,33 @@ class RemoteCarBaseService
                 '%s/%s?%s',
                 $this->url,
                 'vehicles/getallmakes',
+                http_build_query($this->baseOptions)
+            ),
+            $options
+        );
+
+        if (!isset($result['Count'])) {
+            throw new Exception('Getting makes errors!');
+        }
+
+        return $result['Results'];
+    }
+
+    /**
+     * @param int $makeId
+     * @return array
+     * @throws GuzzleException
+     */
+    public function getModelsByMakeId(int $makeId): array
+    {
+        $options = $this->getOptions();
+
+        $result = $this->api->get(
+            sprintf(
+                '%s/%s/%s?%s',
+                $this->url,
+                'vehicles/GetModelsForMakeId',
+                $makeId,
                 http_build_query($this->baseOptions)
             ),
             $options

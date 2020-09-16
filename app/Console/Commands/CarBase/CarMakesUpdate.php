@@ -28,7 +28,7 @@ class CarMakesUpdate extends Command
 
         $this->info('Выгрузка производителей из удаленного сервера...');
 
-        $makes = $this->remoteCarBaseService->makes();
+        $makes = $this->remoteCarBaseService->getMakes();
 
         $this->info(sprintf('Получено %s производителей.', count($makes)));
 
@@ -63,12 +63,12 @@ class CarMakesUpdate extends Command
 
     private function import(array $prepared): int
     {
-        $updated = 0;
+        $imported = 0;
 
         foreach (array_chunk($prepared, $this->rowLimit) as $importChunk) {
-            $updated += $this->carBaseService->batchUpdate($importChunk);
+            $imported += $this->carBaseService->makesBatchSync($importChunk);
         }
 
-        return $updated;
+        return $imported;
     }
 }
