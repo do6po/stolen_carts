@@ -13,7 +13,6 @@ class ModelController
 
     public function search(int $id, SearchRequest $make): AnonymousResourceCollection
     {
-        /** @var CarMake $carMake */
         $carMake = CarMake::query()->findOrFail($id);
 
         $query = $make->input('query');

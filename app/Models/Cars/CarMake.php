@@ -19,6 +19,7 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|self query()
  * @method static self make(array $attributes = [])
  * @method static self create(array $attributes = [])
+ * @method static self findOrFail(int $id)
  * @method static Collection|self[] get(array $attributes = [])
  */
 class CarMake extends BaseModel
