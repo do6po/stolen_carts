@@ -25,6 +25,7 @@ $factory->define(
     function (Faker $faker) {
         return [
             'name' => $faker->unique()->name,
+            'remote_id' => $faker->numberBetween(1, 1000),
         ];
     }
 );
@@ -34,6 +35,7 @@ $factory->define(
     function (Faker $faker) {
         return [
             'name' => $faker->unique()->name,
+            'remote_id' => $faker->numberBetween(1, 1000),
             'make_id' => function () {
                 return factory(CarMake::class)->create()->id;
             }

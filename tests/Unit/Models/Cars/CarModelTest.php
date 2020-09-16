@@ -18,11 +18,11 @@ class CarModelTest extends TestCase
 
         $attributes = [
             'name' => 'A6',
+            'remote_id' => 1000,
         ];
 
         $this->notSeeInDatabase(CarModel::TABLE_NAME, $attributes);
 
-        /** @var CarModel $car */
         $car = CarModel::query()->make($attributes);
         $car->make_id = $make->id;
         $car->save();

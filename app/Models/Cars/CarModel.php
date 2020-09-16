@@ -26,6 +26,8 @@ class CarModel extends BaseModel
 
     protected $fillable = [
         'name',
+        'make_id',
+        'remote_id',
     ];
 
     public function manufacturer(): BelongsTo

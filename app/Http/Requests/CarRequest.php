@@ -25,8 +25,8 @@ class CarRequest extends RequestAbstract
                 Rule::unique('cars', 'registration_plate')->ignore($id)
             ],
             'model_id' => ['required', 'integer', 'exists:car_models,id'],
-            'color' => ['required', 'string'],
-            'year' => ['required', 'integer', 'digits:4'],
+            'color' => ['sometimes', 'nullable', 'string'],
+            'year' => ['sometimes', 'nullable', 'integer', 'digits:4'],
         ];
     }
 }
