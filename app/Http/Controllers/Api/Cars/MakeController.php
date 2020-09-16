@@ -16,7 +16,7 @@ class MakeController
         $query = $request->input('query');
 
         $makes = CarMake::query()
-            ->whereRaw('BINARY name LIKE ?', ["%$query%"])
+            ->whereRaw('LOWER(name) LIKE ?', ["%$query%"])
             ->orderBy('name')
             ->paginate(self::PER_PAGE)
             ->appends(['query' => $query]);

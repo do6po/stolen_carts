@@ -10,7 +10,8 @@
         "guzzlehttp/guzzle": "^7.0",
         "illuminate/redis": "^7.28.1",
         "laravel/lumen-framework": "^7.0",
-        "pearl/lumen-request-validate": "^1.5"
+        "pearl/lumen-request-validate": "^1.5",
+        "tucker-eric/eloquentfilter": "^2.4"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

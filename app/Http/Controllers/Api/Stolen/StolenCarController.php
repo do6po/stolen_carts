@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Api\Stolen;
 
-use App\Http\Requests\CarRequest;
+use App\Http\Requests\StolenCarRequest;
 use App\Http\Resources\Stolen\CarResource;
+use App\Models\StolenCars\Car;
 use App\Services\StolenCarService;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class StolenCarController
@@ -25,13 +27,22 @@ class StolenCarController
         $this->stoleCarService = $carService;
     }
 
+    public function index(Request $request): AnonymousResourceCollection
+    {
+        $cars = Car::query()
+            ->filter($request->all())
+            ->paginate();
+
+        return CarResource::collection($cars);
+    }
+
     /**
-     * @param CarRequest $request
+     * @param StolenCarRequest $request
      * @return CarResource
      * @throws GuzzleException
      * @throws Throwable
      */
-    public function store(CarRequest $request): CarResource
+    public function store(StolenCarRequest $request): CarResource
     {
         $car = $this->stoleCarService->create($request->validated());
 
@@ -40,13 +51,12 @@ class StolenCarController
 
     /**
      * @param int $id
-     * @param CarRequest $request
+     * @param StolenCarRequest $request
      * @return CarResource
      * @throws GuzzleException
      * @throws Throwable
-     * @throws ValidationException
      */
-    public function update(int $id, CarRequest $request): CarResource
+    public function update(int $id, StolenCarRequest $request): CarResource
     {
         $car = $this->stoleCarService->update(
             $this->stoleCarService->findOrFail($id),

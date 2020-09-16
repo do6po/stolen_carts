@@ -60,8 +60,13 @@ class CarBaseService
             );
     }
 
-    public function batchUpdate(array $prepared): int
+    public function makesBatchSync(array $prepared): int
     {
         return CarMake::query()->insertOrIgnore($prepared);
+    }
+
+    public function modelsBatchSync(array $prepared): int
+    {
+        return CarModel::query()->insertOrIgnore($prepared);
     }
 }

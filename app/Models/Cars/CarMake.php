@@ -11,6 +11,7 @@ use Illuminate\Database\Query\Builder;
 /**
  * @property int id
  * @property string name
+ * @property int remote_id
  * @property null|Carbon created_at
  * @property null|Carbon updated_at
  * @property Collection|CarModel[] models
@@ -18,6 +19,8 @@ use Illuminate\Database\Query\Builder;
  * @method static Builder|self query()
  * @method static self make(array $attributes = [])
  * @method static self create(array $attributes = [])
+ * @method static self findOrFail(int $id)
+ * @method static Collection|self[] get(array $attributes = [])
  */
 class CarMake extends BaseModel
 {

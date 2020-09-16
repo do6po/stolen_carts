@@ -13,13 +13,12 @@ class ModelController
 
     public function search(int $id, SearchRequest $make): AnonymousResourceCollection
     {
-        /** @var CarMake $carMake */
         $carMake = CarMake::query()->findOrFail($id);
 
         $query = $make->input('query');
 
         $models = $carMake->models()
-            ->whereRaw('BINARY name LIKE ?', ["%$query%"])
+            ->whereRaw('LOWER(name) LIKE ?', ["%$query%"])
             ->with(['manufacturer'])
             ->paginate(self::PER_PAGE)
             ->appends(['query' => $query]);

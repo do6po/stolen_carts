@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use Pearl\RequestValidate\RequestAbstract;
 
-class CarRequest extends RequestAbstract
+class StolenCarRequest extends RequestAbstract
 {
     public function authorize(): bool
     {
@@ -25,7 +25,7 @@ class CarRequest extends RequestAbstract
                 Rule::unique('cars', 'registration_plate')->ignore($id)
             ],
             'color' => ['sometimes', 'nullable', 'string'],
-            'year' => ['sometimes', 'nullable', 'integer', 'digits:4'],
+            'year' => ['required', 'sometimes', 'nullable', 'integer', 'digits:4'],
         ];
     }
 }
