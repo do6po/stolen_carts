@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\StolenCars\Car;
 use App\Services\CarLibs\CarBaseService;
-use App\Services\CarLibs\VinService;
+use App\Services\CarLibs\RemoteCarBaseService;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
@@ -15,12 +15,12 @@ use Throwable;
 class StolenCarService
 {
 
-    protected VinService $vinService;
+    protected RemoteCarBaseService $vinService;
 
     protected CarBaseService $carBaseService;
 
     public function __construct(
-        VinService $vinService,
+        RemoteCarBaseService $vinService,
         CarBaseService $carBaseService
     ) {
         $this->vinService = $vinService;
@@ -53,7 +53,7 @@ class StolenCarService
         } catch (NotFoundHttpException $exception) {
             Log::error($exception);
 
-            $this->throwValidationException($exception);
+            throw $this->throwValidationException($exception);
         } catch (Throwable $exception) {
             Log::error($exception);
 
@@ -61,14 +61,10 @@ class StolenCarService
         }
     }
 
-    /**
-     * @param Exception $exception
-     * @throws ValidationException
-     */
-    protected function throwValidationException(Exception $exception): void
+    protected function throwValidationException(Exception $exception): ValidationException
     {
         //TODO переделать хендлер - возвращает ошибку 500
-        throw ValidationException::withMessages(
+        return ValidationException::withMessages(
             [
                 'vin' => [
                     $exception->getMessage()
@@ -83,7 +79,6 @@ class StolenCarService
      * @return Car
      * @throws GuzzleException
      * @throws Throwable
-     * @throws ValidationException
      */
     public function update(Car $car, array $validated): Car
     {
@@ -106,7 +101,7 @@ class StolenCarService
         } catch (NotFoundHttpException $exception) {
             Log::error($exception);
 
-            $this->throwValidationException($exception);
+            throw $this->throwValidationException($exception);
         } catch (Throwable $exception) {
             Log::error($exception);
             throw $exception;

@@ -2,7 +2,7 @@
 
 namespace Unit\Services;
 
-use App\Services\CarLibs\VinService;
+use App\Services\CarLibs\RemoteCarBaseService;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TestCase;
@@ -10,7 +10,7 @@ use TestCase;
 class VinServiceTest extends TestCase
 {
 
-    private VinService $service;
+    private RemoteCarBaseService $service;
 
     /**
      * @throws GuzzleException
@@ -49,6 +49,6 @@ class VinServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = $this->app->make(VinService::class);
+        $this->service = $this->app->make(RemoteCarBaseService::class);
     }
 }

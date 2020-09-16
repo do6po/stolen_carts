@@ -8,6 +8,7 @@ use App\Models\Cars\CarModel;
 
 class CarBaseService
 {
+
     public function createModelOrGet(ResolvedCar $resolvedCar): CarModel
     {
         $model = CarModel::query()
@@ -57,5 +58,10 @@ class CarBaseService
                     'remote_id' => $resolvedCar->getMakeId()
                 ]
             );
+    }
+
+    public function batchUpdate(array $prepared): int
+    {
+        return CarMake::query()->insertOrIgnore($prepared);
     }
 }

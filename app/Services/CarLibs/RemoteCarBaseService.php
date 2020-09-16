@@ -4,10 +4,11 @@ namespace App\Services\CarLibs;
 
 use App\Core\Services\ApiService;
 use App\Models\CarBase\ResolvedCar;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class VinService
+class RemoteCarBaseService
 {
     /**
      * @var ApiService
@@ -67,5 +68,31 @@ class VinService
             'json' => $this->baseOptions,
             'headers' => $this->headers,
         ];
+    }
+
+    /**
+     * @return array
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function makes(): array
+    {
+        $options = $this->getOptions();
+
+        $result = $this->api->get(
+            sprintf(
+                '%s/%s?%s',
+                $this->url,
+                'vehicles/getallmakes',
+                http_build_query($this->baseOptions)
+            ),
+            $options
+        );
+
+        if (!isset($result['Count'])) {
+            throw new Exception('Getting makes errors!');
+        }
+
+        return $result['Results'];
     }
 }
