@@ -11,6 +11,7 @@
         "illuminate/redis": "^7.28.1",
         "laravel/lumen-framework": "^7.0",
         "pearl/lumen-request-validate": "^1.5",
+        "rap2hpoutre/fast-excel": "^2.1",
         "tucker-eric/eloquentfilter": "^2.4"
     },
     "require-dev": {

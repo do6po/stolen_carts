@@ -7,3 +7,4 @@ Homestead.yaml
 .phpunit.result.cache
 docker-compose.yml
 storage/mysql
+public/*.xls

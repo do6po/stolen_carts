@@ -193,6 +193,76 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "export to xls",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.137.1/api/stolen/export?",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"137",
+								"1"
+							],
+							"path": [
+								"api",
+								"stolen",
+								"export"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "super",
+									"disabled": true
+								},
+								{
+									"key": "vin",
+									"value": "3f",
+									"disabled": true
+								},
+								{
+									"key": "model_name",
+									"value": "fusion",
+									"disabled": true
+								},
+								{
+									"key": "make_name",
+									"value": "ford",
+									"disabled": true
+								},
+								{
+									"key": "model_id",
+									"value": "247",
+									"disabled": true
+								},
+								{
+									"key": "manufacturer_id",
+									"value": "37890",
+									"disabled": true
+								},
+								{
+									"key": "registration_plate",
+									"value": "ВА",
+									"disabled": true
+								},
+								{
+									"key": "color",
+									"value": "red",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": "2018",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}

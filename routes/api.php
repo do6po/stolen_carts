@@ -55,6 +55,15 @@ $router->group(
                         'uses' => 'StolenCarController@index',
                     ]
                 );
+
+                $router->get(
+                    'export',
+                    [
+                        'as' => 'export',
+                        'uses' => 'StolenCarExportController@export',
+                    ]
+                );
+
                 $router->post(
                     '',
                     [
